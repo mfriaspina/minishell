@@ -6,7 +6,7 @@
 /*   By: mfrias <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 18:59:45 by mfrias            #+#    #+#             */
-/*   Updated: 2019/11/15 21:29:29 by mfrias           ###   ########.fr       */
+/*   Updated: 2019/11/19 12:42:15 by mfrias           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	ft_setenv(int argc, char **argv, char **envp)
 	char	*new;
 
 	i = 0;
-	//NEED to check if it already exists
 	while (envp[i])
 		i++;
 	if (argc == 2)
@@ -51,7 +50,7 @@ void	ft_unsetenv(char **argv, char **envp)
 	int		i;
 	int		j;
 	char	**line;
-	
+
 	i = -1;
 	while (envp[++i])
 	{

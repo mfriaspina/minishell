@@ -6,7 +6,7 @@
 /*   By: mfrias <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 15:21:43 by mfrias            #+#    #+#             */
-/*   Updated: 2019/11/17 12:43:30 by mfrias           ###   ########.fr       */
+/*   Updated: 2019/11/19 12:40:08 by mfrias           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,17 @@ void	commands(char **com, int i, char **envp)
 		ft_printf("%s: command not found\n", com[0]);
 }
 
-char	**get_command(char *line)
-{
-	char	**command;
-
-	command = ft_strsplit(line, ' ');
-	return (command);
-}
-
 void	do_command(int *i, char *line, char **envp)
 {
 	int		j;
+	char	*new;
 	char	**command;
 
 	if (line)
 	{
-		command = get_command(line);
+		new = ft_strtrim(line);
+		command = get_command(new);
+		free(new);
 		while (command[*i])
 			(*i)++;
 		commands(command, *i, envp);
@@ -76,7 +71,6 @@ int		main(int argc, char **argv, char **envp)
 		if (line && !ft_strcmp(line, "exit"))
 		{
 			free(line);
-			system("leaks minishell | grep leaks");
 			exit(0);
 		}
 		i = 0;
