@@ -6,7 +6,7 @@
 /*   By: mfrias <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 11:30:32 by mfrias            #+#    #+#             */
-/*   Updated: 2019/11/19 12:52:14 by mfrias           ###   ########.fr       */
+/*   Updated: 2019/11/19 12:59:33 by mfrias           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,8 @@ static int	ft_wordcount(char const *s)
 	return (num);
 }
 
-int			loop(size_t i, char *s, size_t j, char	**arr)
+int			loop(size_t i, char *s, size_t j, char **arr)
 {
-	while (*s == ' ' && *s)
-		s++;
 	if (*s != '"')
 	{
 		while (s[i] != ' ' && s[i])
@@ -72,6 +70,8 @@ char		**get_command(char *s)
 		return (NULL);
 	while (0 < size)
 	{
+		while (*s == ' ' && *s)
+			s++;
 		if ((i = loop(0, s, j, arr)) == 0)
 			return (NULL);
 		j++;

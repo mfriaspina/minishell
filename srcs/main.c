@@ -6,7 +6,7 @@
 /*   By: mfrias <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 15:21:43 by mfrias            #+#    #+#             */
-/*   Updated: 2019/11/19 12:40:08 by mfrias           ###   ########.fr       */
+/*   Updated: 2019/11/21 19:34:50 by mfrias           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ void	commands(char **com, int i, char **envp)
 		return ;
 	else if (com[0][0] == '.' || com[0][0] == '/')
 		new_process(com[0], com, envp);
-	else if (!ft_strcmp(com[0], "ls"))
-		ls(i, com);
 	else if (!ft_strcmp(com[0], "echo"))
 		echo(i, com, envp);
 	else if (!ft_strcmp(com[0], "pwd"))
@@ -33,7 +31,8 @@ void	commands(char **com, int i, char **envp)
 	else if (!ft_strcmp(com[0], "unsetenv"))
 		ft_unsetenv(&com[0], envp);
 	else
-		ft_printf("%s: command not found\n", com[0]);
+		find_process(com[0], com, envp);
+//	ft_printf("%s: command not found\n", com[0]);
 }
 
 void	do_command(int *i, char *line, char **envp)
@@ -62,8 +61,8 @@ int		main(int argc, char **argv, char **envp)
 	int		i;
 	char	*line;
 
-	if (argc != 1)
-		ft_printf("%s\n", argv[1]);
+	if (argc == 1)
+		start_envp(envp, argv);
 	while (1)
 	{
 		ft_printf("$>");
@@ -71,6 +70,7 @@ int		main(int argc, char **argv, char **envp)
 		if (line && !ft_strcmp(line, "exit"))
 		{
 			free(line);
+			system("leaks minishell");
 			exit(0);
 		}
 		i = 0;

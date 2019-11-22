@@ -6,14 +6,13 @@
 /*   By: mfrias <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 15:16:14 by mfrias            #+#    #+#             */
-/*   Updated: 2019/11/19 11:32:12 by mfrias           ###   ########.fr       */
+/*   Updated: 2019/11/21 19:35:58 by mfrias           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "ft_ls.h"
 # include "../libft/libft.h"
 
 int				echo(int argc, char **argv, char **envp);
@@ -25,6 +24,8 @@ void			env(int argc, char **argv, char **envp);
 void			ft_setenv(int argc, char **argv, char **envp);
 void			ft_unsetenv(char **argv, char **envp);
 
+void			find_process(char *name, char **argv, char **envp);
+void			start_envp(char **envp, char **argv);
 void			new_process(char *name, char **argv, char **envp);
 
 char			**get_command(char *s);

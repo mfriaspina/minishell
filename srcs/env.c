@@ -6,7 +6,7 @@
 /*   By: mfrias <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 18:59:45 by mfrias            #+#    #+#             */
-/*   Updated: 2019/11/19 12:42:15 by mfrias           ###   ########.fr       */
+/*   Updated: 2019/11/21 17:30:30 by mfrias           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ void	ft_unsetenv(char **argv, char **envp)
 		if (!ft_strcmp(line[0], argv[1]))
 		{
 			free(envp[i]);
-			envp[i] = NULL;
+			while (envp[++i])
+				envp[i - 1] = envp[i];
+			i--;
+			envp[i--] = NULL;
 		}
 		j = -1;
 		while (line[++j])
