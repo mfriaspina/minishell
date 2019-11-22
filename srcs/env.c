@@ -6,11 +6,23 @@
 /*   By: mfrias <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 18:59:45 by mfrias            #+#    #+#             */
-/*   Updated: 2019/11/21 17:30:30 by mfrias           ###   ########.fr       */
+/*   Updated: 2019/11/22 15:29:15 by mfrias           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_line(char **line, char *new)
+{
+	int	j;
+
+	j = -1;
+	while (line[++j])
+		free(line[j]);
+	free(line);
+	if (new)
+		free(new);
+}
 
 void	env(int argc, char **argv, char **envp)
 {
@@ -31,24 +43,34 @@ void	ft_setenv(int argc, char **argv, char **envp)
 {
 	int		i;
 	char	*new;
+	char	**line;
 
-	i = 0;
-	while (envp[i])
-		i++;
-	if (argc == 2)
-		envp[i] = ft_strdup(argv[1]);
-	else
+	if (argc <= 2)
+		return ;
+	new = ft_strjoin(argv[1], "=");
+	new = ft_strcat(new, argv[2]);
+	i = -1;
+	while (envp[++i])
 	{
-		new = ft_strcat(argv[1], "=");
-		envp[i] = ft_strdup(ft_strcat(new, argv[2]));
+		line = ft_strsplit(envp[i], '=');
+		if (!ft_strcmp(line[0], argv[1]))
+		{
+			free(envp[i]);
+			envp[i] = ft_strdup(new);
+			free_line(line, new);
+			return ;
+		}
+		free_line(line, NULL);
 	}
+	free(envp[i]);
+	envp[i] = ft_strdup(new);
 	envp[i + 1] = NULL;
+	free(new);
 }
 
 void	ft_unsetenv(char **argv, char **envp)
 {
 	int		i;
-	int		j;
 	char	**line;
 
 	i = -1;
@@ -63,17 +85,13 @@ void	ft_unsetenv(char **argv, char **envp)
 			i--;
 			envp[i--] = NULL;
 		}
-		j = -1;
-		while (line[++j])
-			free(line[j]);
-		free(line);
+		free_line(line, NULL);
 	}
 }
 
 char	*ft_getenv(char **envp, char *var)
 {
 	int		i;
-	int		j;
 	char	**line;
 	char	*ret;
 
@@ -84,10 +102,7 @@ char	*ft_getenv(char **envp, char *var)
 		line = ft_strsplit(envp[i], '=');
 		if (!ft_strcmp(line[0], var))
 			ret = ft_strdup(line[1]);
-		j = -1;
-		while (line[++j])
-			free(line[j]);
-		free(line);
+		free_line(line, NULL);
 	}
 	return (ret);
 }
