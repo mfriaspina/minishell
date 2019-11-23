@@ -6,16 +6,16 @@
 /*   By: mfrias <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 15:21:43 by mfrias            #+#    #+#             */
-/*   Updated: 2019/11/22 15:40:39 by mfrias           ###   ########.fr       */
+/*   Updated: 2019/11/23 12:23:04 by mfrias           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	commands(char **com, int i, char **envp)
+int		commands(char **com, int i, char **envp)
 {
 	if (!i)
-		return ;
+		return (-1);
 	else if (com[0][0] == '.' || com[0][0] == '/')
 		new_process(com[0], com, envp);
 	else if (!ft_strcmp(com[0], "echo"))
@@ -31,7 +31,8 @@ void	commands(char **com, int i, char **envp)
 	else if (!ft_strcmp(com[0], "unsetenv"))
 		ft_unsetenv(&com[0], envp);
 	else
-		find_process(com[0], com, envp);
+		return (find_process(com[0], com, envp));
+	return (-1);
 }
 
 void	do_command(int *i, char *line, char **envp)
@@ -47,8 +48,7 @@ void	do_command(int *i, char *line, char **envp)
 		free(new);
 		while (command[*i])
 			(*i)++;
-		commands(command, *i, envp);
-		j = -1;
+		j = commands(command, *i, envp);
 		while (command[++j])
 			free(command[j]);
 		free(command);

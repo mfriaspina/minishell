@@ -6,13 +6,13 @@
 /*   By: mfrias <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 16:50:39 by mfrias            #+#    #+#             */
-/*   Updated: 2019/11/21 23:14:38 by mfrias           ###   ########.fr       */
+/*   Updated: 2019/11/23 12:22:02 by mfrias           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_stuff(char **paths, char *temp)
+int		free_stuff(char **paths)
 {
 	int	i;
 
@@ -23,10 +23,10 @@ void	free_stuff(char **paths, char *temp)
 			free(paths[i]);
 		free(paths);
 	}
-	free(temp);
+	return (0);
 }
 
-void	find_process(char *name, char **argv, char **envp)
+int		find_process(char *name, char **argv, char **envp)
 {
 	char	*temp;
 	char	**paths;
@@ -36,7 +36,8 @@ void	find_process(char *name, char **argv, char **envp)
 	temp = ft_getenv(envp, "PATH");
 	paths = ft_strsplit(temp, ':');
 	free(temp);
-	temp = ft_strdup(name);
+	ft_strcpy(temp, name);
+	free(name);
 	path = NULL;
 	i = -1;
 	while (!path && paths && paths[++i])
@@ -50,7 +51,7 @@ void	find_process(char *name, char **argv, char **envp)
 		new_process(path, argv, envp);
 	else
 		ft_printf("%s: command not found\n", temp);
-	free_stuff(paths, temp);
+	return (free_stuff(paths));
 }
 
 void	start_envp(char **envp, char **argv)

@@ -6,7 +6,7 @@
 /*   By: mfrias <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:14:39 by mfrias            #+#    #+#             */
-/*   Updated: 2019/11/15 20:39:16 by mfrias           ###   ########.fr       */
+/*   Updated: 2019/11/22 16:10:52 by mfrias           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ int	cd(int argc, char **argv, char **envp)
 	else
 	{
 		if (!ft_strcmp("-", argv[1]))
+		{
 			path = ft_getenv(envp, "OLDPWD");
+			ft_printf("%s\n", path);
+		}
 		else if (argv[1][0] == '~')
 			path = ft_strcat(ft_getenv(envp, "HOME"), &argv[1][1]);
 		else

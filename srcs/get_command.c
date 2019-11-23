@@ -6,7 +6,7 @@
 /*   By: mfrias <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 11:30:32 by mfrias            #+#    #+#             */
-/*   Updated: 2019/11/19 12:59:33 by mfrias           ###   ########.fr       */
+/*   Updated: 2019/11/22 16:08:22 by mfrias           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	ft_wordcount(char const *s)
 			while (s[++i] != '"' && s[i])
 				size = 1;
 		else
-			while (s[i++] != ' ' && s[i])
+			while (s[++i] != ' ' && s[i])
 				size = 1;
 		if (size)
 			num++;

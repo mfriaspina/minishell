@@ -6,7 +6,7 @@
 /*   By: mfrias <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 15:16:14 by mfrias            #+#    #+#             */
-/*   Updated: 2019/11/22 15:41:17 by mfrias           ###   ########.fr       */
+/*   Updated: 2019/11/23 12:20:54 by mfrias           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void			env(int argc, char **argv, char **envp);
 void			ft_setenv(int argc, char **argv, char **envp);
 void			ft_unsetenv(char **argv, char **envp);
 
-void			find_process(char *name, char **argv, char **envp);
+int				find_process(char *name, char **argv, char **envp);
 void			start_envp(char **envp, char **argv);
 void			new_process(char *name, char **argv, char **envp);
 
