@@ -6,7 +6,7 @@
 /*   By: mfrias <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 18:59:45 by mfrias            #+#    #+#             */
-/*   Updated: 2019/11/22 15:29:15 by mfrias           ###   ########.fr       */
+/*   Updated: 2019/11/23 20:13:34 by mfrias           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_setenv(int argc, char **argv, char **envp)
 	if (argc <= 2)
 		return ;
 	new = ft_strjoin(argv[1], "=");
-	new = ft_strcat(new, argv[2]);
+	new = free_strjoin(new, argv[2], 0);
 	i = -1;
 	while (envp[++i])
 	{
