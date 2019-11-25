@@ -6,16 +6,17 @@
 /*   By: mfrias <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 16:50:39 by mfrias            #+#    #+#             */
-/*   Updated: 2019/11/23 12:22:02 by mfrias           ###   ########.fr       */
+/*   Updated: 2019/11/25 15:18:44 by mfrias           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		free_stuff(char **paths)
+int		free_stuff(char **paths, char *temp)
 {
 	int	i;
 
+	free(temp);
 	i = -1;
 	if (paths)
 	{
@@ -26,6 +27,16 @@ int		free_stuff(char **paths)
 	return (0);
 }
 
+int		get_process(char ***paths, char **temp, char **name, char **path)
+{
+	*paths = ft_strsplit(*temp, ':');
+	free(*temp);
+	*temp = ft_strdup(*name);
+	free(*name);
+	*path = NULL;
+	return (-1);
+}
+
 int		find_process(char *name, char **argv, char **envp)
 {
 	char	*temp;
@@ -33,13 +44,12 @@ int		find_process(char *name, char **argv, char **envp)
 	char	*path;
 	int		i;
 
-	temp = ft_getenv(envp, "PATH");
-	paths = ft_strsplit(temp, ':');
-	free(temp);
-	ft_strcpy(temp, name);
-	free(name);
-	path = NULL;
-	i = -1;
+	if (!(temp = ft_getenv(envp, "PATH")))
+	{
+		ft_printf("%s: command not found\n", name);
+		return (-1);
+	}
+	i = get_process(&paths, &temp, &name, &path);
 	while (!path && paths && paths[++i])
 	{
 		path = ft_strcat(paths[i], "/");
@@ -51,7 +61,7 @@ int		find_process(char *name, char **argv, char **envp)
 		new_process(path, argv, envp);
 	else
 		ft_printf("%s: command not found\n", temp);
-	return (free_stuff(paths));
+	return (free_stuff(paths, temp));
 }
 
 void	start_envp(char **envp, char **argv)
